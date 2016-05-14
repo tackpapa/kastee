@@ -1,0 +1,56 @@
+
+from system.core.controller import *
+
+class Admin(Controller):
+    def __init__(self, action):
+        super(Admin, self).__init__(action)
+
+        self.load_model('Adminmodel')
+        self.db = self._app.db
+
+
+    def admin_dash(self):
+        users=self.models['Adminmodel'].showall()
+        return self.load_view('admindash.html', users=users)
+
+    def admin_add_page(self):
+        return self.load_view('adminadd.html')
+
+    def admin_add(self):
+        return
+
+    def admin_editpage(self, id):
+        user=self.models['Adminmodel'].showone(id)
+        return self.load_view('adminedit.html', user=user)
+
+    def edituser(self, id):
+        info={
+            'id': request.form['id'],
+            'first':request.form['first'],
+            'last':request.form['last'],
+            'email':request.form['email'],
+            'level': request.form['level']
+            }
+        user=self.models['Adminmodel'].userupdate(info)
+        return redirect('/admin/dash')
+
+    def pwupdate(self, id):
+        pw=request.form['pw']
+        cpw=request.form['cpw']
+        id=request.form['id']
+        if pw != cpw:
+            flash('password invalid')
+            url="/admin/editpage/"+str(id)
+            return redirect (url)
+        info={
+        'pw':pw,
+        'id':id
+        }
+        user=self.models['Adminmodel'].pwupdate(info)
+        return redirect('/admin/dash', user=user)
+
+
+
+    def kick(self, id):
+        self.models['Adminmodel'].kick(id)
+        return redirect ('/admin/dash')

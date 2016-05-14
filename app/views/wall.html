@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <title>wall</title>
+    <link rel="stylesheet" href="/static/css/wall.css" type="text/css">
+         <link rel ='stylesheet' type='text/css' href="{{url_for('static', filename='wall.css')}}">
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+         <!-- Optional theme -->
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+         <!-- Latest compiled and minified JavaScript -->
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Kickchen</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+
+
+            <p class="navbar-text"><a href="/users/dash">Dashoboard</a></p>
+            <p class="navbar-text"><a href="/users/editpage">Profile</a></p>
+            <p class="nav navbar-text navbar-right"><a href="/users/logout">Log off</a></p>
+          </div>
+      </div>
+  </nav>
+  <br><br><br><br>
+  {% if user %}
+<h4>{{user.name}}</h4>
+<P>REGISTERED AT:{{user.created_at}}</P>
+<P>USER ID:#{{user.id}}</P>
+<P>EMAIL:{{user.email}}</P>
+<P>DESCRIPTION</P>
+
+<H4>LEAVE A MESSAGE FOR {{user.name}}</H4>
+{% endif %}
+
+  <div class="input-group input-group-lg">
+    <form action='/msg' method='post'>
+    <input type="text" class="form-control" name="msg" aria-describedby="sizing-addon1">
+    <input type='submit'  class="btn btn-default" value="Post">
+    </form>
+  </div>
+
+        <!-- nav var ends -->
+
+      {% for msg in msgs %}
+
+        <div class='msgs'><h5> {{msg.name}}      {{msg.created_at.strftime('%B %d, %Y')}}</h5><br>
+          <p>
+            {{msg.message}}
+          </p>
+          <form action='/msgdel' method='post'>
+              <input type='hidden' name='msg_id' value='{{ msg.msg_id }}'>
+               <input type='submit' id='del' name ='del' value='delete'>
+          </form>
+            </div>
+
+
+             <div class='com'>
+                          {% for x in cmts %}
+                            {% if x.message_id == msg.id %}
+
+                              <p class='comme'>
+                                {{x.name}}    {{(x.created_at.strftime('%B %d, %Y'))}}<br>
+                                {{x.comment}}
+                                <form action='/cmtdel' method='post'>
+                                    <input type='hidden' name='cmt_id' value='{{ x.cmt_id }}'>
+                                     <input type='submit' id='del' name ='del' value='delete'>
+                                </form>
+
+                              </p>
+
+
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+
+          <form action='/comment' method='post'>
+              <input type='hidden' name='cmt_id' value='{{ msg.msg_id }}'>
+               <input type='text' id='cmtbox' name='cmt' placeholder="type your comment here">
+               <input type='submit' id='butt2' value='post'>
+          </form>
+
+      {% endfor %}
+
+
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+</body>
+
+</html>
