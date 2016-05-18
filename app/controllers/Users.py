@@ -28,17 +28,19 @@ class Users(Controller):
         'email':email,
         'pw': pw
         }
-        session['user']=self.models['Usersmodel'].login(info)
-        user=session['user']
-        session['status']=True
-        session['userid']=user['id']
-        session['first']=user['first']
-        session['last']=user['last']
-        session['email']=user['email']
-        session['level']=user['level']
-
-        if session['user']==False:
+        user=self.models['Usersmodel'].login(info)
+        if user==False:
             flash('invalid email or password')
+            return redirect('/users/dash')
+
+        session['status']=True
+        session['userid']=user[0]['id']
+        session['first']=user[0]['first']
+        session['last']=user[0]['last']
+        session['email']=user[0]['email']
+        session['level']=user[0]['level']
+
+
         if user:
             return redirect ('/users/dash')
 ######################################################################################################################
@@ -49,7 +51,7 @@ class Users(Controller):
         session['email']=[]
         session['userid']=[]
         session['status']=False
-        return redirect('/users/login')
+        return redirect('/users/loginpage')
 ######################################################################################################################
     def register_page(self):
         return self.load_view('register.html')
@@ -80,29 +82,34 @@ class Users(Controller):
             flash("pw doesn't match you idiot!")
             error=True
         if error == True:
-            return redirect('/users/loginpage')
+            flash(" whats wrong")
+            return redirect('/users/registerpage')
+        print 'AKJAKLSFDJKALJFD;KLFKLJ;AKJDF;KAJF;KLJA;LFKJA;KL'
 
         info={
         'first':request.form['first'],
         'last':request.form['last'],
         'email':request.form['email'],
-        'pw': request.form['pw']
+        'pw': request.form['pw'],
+        'level': 1
         }
         run=self.models['Usersmodel'].register(info)
-        if run['id']== 1:
+        if run[0]['id']== 1:
             self.models['Usersmodel'].makeadmin()
+        else:
+            pass
 
         return redirect ('/users/loginpage')
 
 ######################################################################################################################
     def dash(self):
         users=self.models['Usersmodel'].showall()
-        if session[level] > 5:
-            return redirect('/admin_dash')
+        if session['level'] > 5:
+            return redirect('/admin/dash')
         else:
             return self.load_view('userdash.html', users=users)
 ######################################################################################################################
-    def editpage(self, id):
+    def editpage(self):
         return self.load_view('edit.html')
 ######################################################################################################################
     def edit(self):

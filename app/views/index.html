@@ -39,9 +39,16 @@
 
 
             <a href="/users/loginpage"><p class="navbar-text">Home</p></a>
+            {% if session['status']==True %}
+            <p class="navbar-text"><a href="/users/dash">Dashoboard</a></p>
+            <p class="navbar-text"><a href="/users/editpage">Profile</a></p>
+            <p class="nav navbar-text navbar-right">You are logged in as {{session['email']}}</p>
+            {% endif %}
 
-
+                  {% if session['status']==False %}
             <p class="nav navbar-text navbar-right"><a href="/users/loginpage">Sign In</a></p>
+                  {% endif %}
+
         </div>
       </div>
     </nav>

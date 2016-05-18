@@ -14,9 +14,12 @@ class Usersmodel(Model):
         'last': info['last'],
         'email': info['email'],
         'pw':hashed_pw,
-        'level':1
+        'level':info['level']
         }
-        return self.db.query_db(query, data)
+        self.db.query_db(query, data)
+        runquery = "select * from users where id='1'"
+
+        return self.db.query_db(runquery)
 
     def makeadmin(self):
         query = "UPDATE users set level = '9' where id = '1'"
@@ -26,7 +29,7 @@ class Usersmodel(Model):
     def login(self, info):
         pw = info['pw']
         email = info['email']
-        userquery = "SELECT * FROM users WHERE email = :email LIMIT 1"
+        userquery = "SELECT * FROM users WHERE email=:email limit 1"
         userdata = {'email': email}
         user = self.db.query_db(userquery, userdata)
         if len(user) == 0:
@@ -43,7 +46,7 @@ class Usersmodel(Model):
 
     def update(self, info):
         query = "UPDATE users set email=:email, first=:first, last=:last where id=:id"
-        data = {'email':info['email'], 'first':info['first'], 'last':info['last']', 'id':info['id']}
+        data = {'email':info['email'], 'first':info['first'], 'last':info['last'], 'id':info['id']}
         print data
         return self.db.query_db(query, data)
 
@@ -59,4 +62,4 @@ class Usersmodel(Model):
                 hashed_pw = self.bcrypt.generate_password_hash(pw)
                 query = "update users set pw=:pw where email=:email"
                 data = {'pw':hashed_pw, 'email':info['email']}
-                return user=self.db.query_db(query, data)
+                return self.db.query_db(query, data)

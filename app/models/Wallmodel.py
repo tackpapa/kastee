@@ -3,15 +3,16 @@ from system.core.model import Model
 from time import mktime
 from datetime import datetime
 
-class Usersmodel(Model):
+class Wallmodel(Model):
     def __init__(self):
-        super(Usersmodel, self).__init__()
+        super(Wallmodel, self).__init__()
 
     def msgpost(self, info):
-        query = "INSERT INTO messages (id, message, created_at, updated_at) values (:id, :message, NOW(), NOW())"
+        query = "INSERT INTO messages (user_id, message, created_at, updated_at, friend_id) values (:user_id, :message, NOW(), NOW(), :friend_id)"
         data={
-            'id':info['id'],
-            'message':info['message']
+            'user_id':info['id'],
+            'message':info['msg'],
+            'friend_id':info['friend_id']
         }
         return self.db.query_db(query, data)
 
@@ -25,7 +26,7 @@ class Usersmodel(Model):
         return self.db.query_db(query, data)
 
     def msgshow(self):
-        query = "select concat(users.first, users.last) as name , messages.message, messages.created_at, messages.id as msg_id from users left join messages on users.id=messages.user_id order by created_at Desc"
+        query = "select concat(users.first, users.last) as name, users.id, messages.friend_id, messages.message, messages.created_at, messages.id as msg_id from messages left join users on users.id=messages.user_id order by created_at Desc"
         return self.db.query_db(query)
 
     def cmtshow(self):
@@ -33,20 +34,20 @@ class Usersmodel(Model):
         return self.db.query_db(query)
 
     def usershow(self, info):
-        query = "SELECT FROM users where id=:id limit 1"
+        query = "SELECT * FROM users where id=:id limit 1"
         data={ 'id':info['id'] }
-        return self.db.query_db(query)
+        return self.db.query_db(query, data)
 
     def msgdel(self, info):
-        query = "DELETE from messages where message_id=:message_id"
+        query = "DELETE from messages where id=:message_id"
         data={
-            'message_id'=:info['message_id']
+            'message_id':info['message_id']
         }
         return self.db.query_db(query, data)
 
     def cmtdel(self, info):
         query = "DELETE from comments where id=:id"
         data={
-            'id'=:info['id']
+            'id':info['id']
         }
         return self.db.query_db(query, data)

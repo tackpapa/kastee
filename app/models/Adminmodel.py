@@ -15,7 +15,7 @@ class Adminmodel(Model):
         return self.db.query_db(query)
 
     def showone(self, id):
-        query = "SELECT from users where id=:id limit 1"
+        query = "SELECT * from users where id=:id limit 1"
         data = {'id': id}
         return self.db.query_db(query, data)
 

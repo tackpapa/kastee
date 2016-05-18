@@ -6,7 +6,7 @@ class Admin(Controller):
         super(Admin, self).__init__(action)
 
         self.load_model('Adminmodel')
-        self.db = self._app.db
+        # self.db = self._app.db
 
 
     def admin_dash(self):
@@ -21,7 +21,7 @@ class Admin(Controller):
 
     def admin_editpage(self, id):
         user=self.models['Adminmodel'].showone(id)
-        return self.load_view('adminedit.html', user=user)
+        return self.load_view('adminedit.html', user=user[0])
 
     def edituser(self, id):
         info={
