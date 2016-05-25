@@ -11,22 +11,23 @@ class Adminmodel(Model):
         return self.db.query_db(query, data)
 
     def showall(self):
-        query = "Select * from users"
+        query = "Select * from users order by created_at desc"
         return self.db.query_db(query)
 
     def showone(self, id):
+        id=id
         query = "SELECT * from users where id=:id limit 1"
         data = {'id': id}
         return self.db.query_db(query, data)
 
     def userupdate(self, info):
-        query = "update users set emaiil=:email, first=:first, last=:last, level=:level where id=:id"
+        query = "update users set email=:email, first=:first, last=:last, level=:level where id=:id"
         data = {
             'email':info['email'],
             'first':info['first'],
             'last': info['last'],
             'level': info['level'],
-            'id': id
+            'id': info['id']
         }
         return self.db.query_db(query, data)
 
@@ -36,4 +37,13 @@ class Adminmodel(Model):
         hashed_pw = self.bcrypt.generate_password_hash(pw)
         query = "update users set pw=:pw where id=:id"
         data = {'pw':hashed_pw, 'id':info['id']}
+        return self.db.query_db(query, data)
+
+    def addanoun(self, info):
+        query = " insert into announcements(created_at, content, user_id, apt) values (NOW(), :content, :user_id, :apt)"
+        data={
+            'content': info['content'],
+            'user_id': info['user_id'],
+            'apt':info['apt']
+        }
         return self.db.query_db(query, data)

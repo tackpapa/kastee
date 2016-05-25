@@ -9,6 +9,7 @@ class Users(Controller):
         super(Users, self).__init__(action)
 
         self.load_model('Usersmodel')
+        self.load_model('Wallmodel')
 ######################################################################################################################
 
     def index(self):
@@ -39,6 +40,7 @@ class Users(Controller):
         session['last']=user[0]['last']
         session['email']=user[0]['email']
         session['level']=user[0]['level']
+        session['apt'] = user[0]['apt']
 
 
         if user:
@@ -58,6 +60,16 @@ class Users(Controller):
 ######################################################################################################################
     def register(self):
         error=False
+
+        if len(request.form['apt']) == 0:
+            flash('You need a code to register!')
+            error=True
+        thecode=request.form['apt']
+        code=self.models['Usersmodel'].aptsearch(thecode)
+
+        if code == False:
+            flash('Your apartment has not registered yet, or invalid code')
+            error=True
 
         if len(request.form['first']) < 2:
             flash('name should be longer than 2 letters')
@@ -82,35 +94,87 @@ class Users(Controller):
             flash("pw doesn't match you idiot!")
             error=True
         if error == True:
-            flash(" whats wrong")
             return redirect('/users/registerpage')
-        print 'AKJAKLSFDJKALJFD;KLFKLJ;AKJDF;KAJF;KLJA;LFKJA;KL'
 
         info={
         'first':request.form['first'],
         'last':request.form['last'],
         'email':request.form['email'],
         'pw': request.form['pw'],
-        'level': 1
+        'level': 1,
+        'apt':code
         }
-        run=self.models['Usersmodel'].register(info)
-        if run[0]['id']== 1:
-            self.models['Usersmodel'].makeadmin()
-        else:
-            pass
+        self.models['Usersmodel'].register(info)
+
+        return redirect ('/users/loginpage')
+
+    def regimanager(self):
+        error=False
+
+        if len(request.form['apt']) == 0:
+            flash('You should make a code for your apt')
+
+        if len(request.form['first']) < 2:
+            flash('name should be longer than 2 letters')
+            error=True
+
+        if len(request.form['last']) < 2:
+            flash('you must write your apt number')
+            error=True
+
+        if not EMAIL_REGEX.match(request.form['email']):
+            flash("email not valid!")
+            error=True
+
+
+        if len(request.form['pw']) < 2:
+            flash("password should be longer than 2letters!")
+            error=True
+
+        pw = request.form['pw']
+        cpw = request.form['cpw']
+        if cpw != pw:
+            flash("pw doesn't match you idiot!")
+            error=True
+
+        if error == True:
+            return redirect('/users/registerpage/manager')
+
+
+        level = 6
+
+        info={
+        'first':request.form['first'],
+        'last':request.form['last'],
+        'email':request.form['email'],
+        'pw': request.form['pw'],
+        'level': level,
+        'apt':request.form['apt']
+        }
+        self.models['Usersmodel'].register(info)
 
         return redirect ('/users/loginpage')
 
 ######################################################################################################################
     def dash(self):
+
         users=self.models['Usersmodel'].showall()
-        if session['level'] > 5:
-            return redirect('/admin/dash')
-        else:
-            return self.load_view('userdash.html', users=users)
+
+        url="/wall/"+str(session['apt'])
+        return redirect(url)
 ######################################################################################################################
     def editpage(self):
-        return self.load_view('edit.html')
+
+        info={
+            'id':session['userid']
+        }
+
+        dms=self.models['Usersmodel'].dms(info)
+        dmcmts=self.models['Usersmodel'].dmcmts()
+        all=self.models['Wallmodel'].all()
+
+
+        return self.load_view('edit.html', dms=dms, dmcmts=dmcmts, all=all)
 ######################################################################################################################
     def edit(self):
         info={
@@ -120,6 +184,7 @@ class Users(Controller):
             'id': session['userid']
         }
         users=self.models['Usersmodel'].update(info)
+
         return redirect('/users/dash')
 ######################################################################################################################
 
@@ -137,3 +202,24 @@ class Users(Controller):
         self.models['Usersmodel'].pwupdate(info)
         return redirect('/users/dash')
 ######################################################################################################################
+
+    def dmcomment(self):
+
+        info={
+            'dm_id':request.form['dm_id'],
+            'user_id' : request.form['user_id'],
+            'dmcomment' : request.form['dmcmt']
+        }
+        self.models['Usersmodel'].dmcomment(info)
+        return redirect ('/users/editpage')
+
+    def dmcmtdel(self):
+        info={
+            'dmcmt_id':request.form['dmcmt_id']
+        }
+        self.models['Usersmodel'].dmcmtdel(info)
+        return redirect ('/users/editpage')
+
+    def manager(self):
+        session['mag']=True
+        return self.load_view('manager.html')

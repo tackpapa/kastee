@@ -8,11 +8,11 @@ class Wallmodel(Model):
         super(Wallmodel, self).__init__()
 
     def msgpost(self, info):
-        query = "INSERT INTO messages (user_id, message, created_at, updated_at, friend_id) values (:user_id, :message, NOW(), NOW(), :friend_id)"
+        query = "INSERT INTO messages (user_id, message, created_at, updated_at, apt) values (:user_id, :message, NOW(), NOW(), :apt)"
         data={
             'user_id':info['id'],
             'message':info['msg'],
-            'friend_id':info['friend_id']
+            'apt':info['apt']
         }
         return self.db.query_db(query, data)
 
@@ -26,11 +26,13 @@ class Wallmodel(Model):
         return self.db.query_db(query, data)
 
     def msgshow(self):
-        query = "select concat(users.first, users.last) as name, users.id, messages.friend_id, messages.message, messages.created_at, messages.id as msg_id from messages left join users on users.id=messages.user_id order by created_at Desc"
+        query = "select users.first, users.last, users.id, messages.apt, messages.message, messages.created_at, messages.id as msg_id from messages left join users on users.id=messages.user_id order by created_at Desc"
         return self.db.query_db(query)
 
+
+
     def cmtshow(self):
-        query = "select comments.id as cmt_id, comments.created_at, comments.message_id, comments.user_id, comments.comment, concat(users.first, users.last) as name from comments left join users on comments.user_id=users.id order by created_at Desc"
+        query = "select comments.id as cmt_id, comments.created_at, comments.message_id, comments.user_id, comments.comment, concat(users.first, users.last) as name from comments left join users on comments.user_id=users.id"
         return self.db.query_db(query)
 
     def usershow(self, info):
@@ -50,4 +52,26 @@ class Wallmodel(Model):
         data={
             'id':info['id']
         }
+        return self.db.query_db(query, data)
+
+    def all(self):
+        query="select * from users order by level desc"
+        return self.db.query_db(query)
+
+    def anoun(self):
+        query="SELECT * from announcements"
+        return self.db.query_db(query)
+
+    def dm(self, info):
+        query="insert into dms (dm, user_id, friend_id, created_at) values (:dm, :user_id, :friend_id, NOW())"
+        data={
+            'dm':info['dm'],
+            'user_id':info['user_id'],
+            'friend_id':info['friend_id']
+        }
+        return self.db.query_db(query, data)
+
+    def delanoun(self, id):
+        query="delete from announcements where id=:id"
+        data={'id':id}
         return self.db.query_db(query, data)

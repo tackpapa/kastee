@@ -8,18 +8,30 @@ class Usersmodel(Model):
     def register(self, info):
         pw = info['pw']
         hashed_pw = self.bcrypt.generate_password_hash(pw)
-        query = "INSERT into users (first, last, email, created_at, updated_at, pw, level) values(:first, :last, :email, NOW(), NOW(), :pw, :level)"
+        query = "INSERT into users (first, last, email, created_at, updated_at, pw, level, apt) values(:first, :last, :email, NOW(), NOW(), :pw, :level, :apt)"
         data = {
         'first': info['first'],
         'last': info['last'],
         'email': info['email'],
         'pw':hashed_pw,
-        'level':info['level']
+        'level':info['level'],
+        'apt':info['apt']
         }
         self.db.query_db(query, data)
-        runquery = "select * from users where id='1'"
 
-        return self.db.query_db(runquery)
+
+        return
+
+    def aptsearch(self, code):
+        query="select * from users where apt=:apt limit 1"
+        data={
+        'apt' : code}
+
+        apt=self.db.query_db(query, data)
+        if len(apt) == 0:
+            return False
+        if apt:
+            return apt[0]['apt']
 
     def makeadmin(self):
         query = "UPDATE users set level = '9' where id = '1'"
@@ -63,3 +75,30 @@ class Usersmodel(Model):
                 query = "update users set pw=:pw where email=:email"
                 data = {'pw':hashed_pw, 'email':info['email']}
                 return self.db.query_db(query, data)
+
+    def dms(self, info):
+        query="select dms.id, dms.dm, dms.user_id, dms.friend_id, dms.created_at, concat(users.first, users.last) as name from dms left join users on users.id=dms.user_id where dms.friend_id=:id order by created_at desc"
+        data={
+            'id':info['id']
+        }
+        return self.db.query_db(query, data)
+
+    def dmcmts(self):
+        query="SELECT dmcomments.id as dmcmt_id, dmcomments.created_at, dmcomments.dm_id, dmcomments.user_id, dmcomments.dmcomment, concat(users.first, users.last) as name from dmcomments left join users on dmcomments.user_id=users.id"
+        return self.db.query_db(query)
+
+    def dmcomment(self, info):
+        query="INSERT INTO dmcomments (dmcomment, user_id, dm_id, created_at) values (:dmcomment, :user_id, :dm_id, NOW())"
+        data={
+            'dmcomment':info['dmcomment'],
+            'user_id':info['user_id'],
+            'dm_id' : info['dm_id']
+        }
+        return self.db.query_db (query, data)
+
+    def dmcmtdel(self, info):
+        query="delete from dmcomments where id=:id"
+        data={
+            'id':info['dmcmt_id']
+        }
+        return self.db.query_db (query, data)

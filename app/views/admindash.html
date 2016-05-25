@@ -5,27 +5,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>user dashboard</title>
 
-    <!-- Latest compiled and minified CSS -->
+    <title>Admin</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-    <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </head>
 
 <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-custom navbar-fixed-top" style="background-color:#006699;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -34,14 +28,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Kickchen</a>
+                <a class="navbar-brand" style="color:white;"href="/">Kastee</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
 
 
-                <p class="navbar-text"><a href="/users/dash">Dashoboard</a></p>
-                <p class="navbar-text"><a href="/users/editpage">Profile</a></p>
-                <p class="nav navbar-text navbar-right"><a href="/users/logout">Log off</a></p>
+
+                <p class="navbar-text"><a style="color:white;"href="/wall/{{session['apt']}}">Home</a></p>
+                {% if session['status']==True %}
+                <p class="nav navbar-text navbar-right"><a style="color:white;"href="/users/logout">Log out</a></p>
+                {% endif %}
             </div>
         </div>
         </div>
@@ -51,31 +47,69 @@
     <br>
     <br>
 
-    <div class='row'>
-        <div class="col-md-5 col-md-offset-2">
-            <h3>Manage Users</h3>
+
+        <div style="margin-bottom:10px;" class="col-md-3 col-md-offset-2">
+            <h3>Manage All Tenants</h3>
         </div>
-          <div class='col-md-3 col-md-offset-8'><a class="btn btn-primary btn-sm" href="/admin/add_page" role="button">ADD NEW USER</a></div>
-    </div>
+          <div style="margin-top:15px;" class='col-md-3 col-md-offset-3'><a class="btn btn-primary btn-sm" href="/admin/add_page" role="button">Add New Tenant</a></div>
+
 <div class='container'>
 
 
     <div class="row">
-        <div class="col-md-9 col-md-offset-1">
+        <div class="col-md-12 col-md-offset-0">
 
             <table class="table table-bordered">
                 <tr>
                     <th class="col-md-1" >ID</th>
-                    <th class="col-md-2">Name</th>
+                    <th class="col-md-1">Name</th>
+                    <th class="col-md-1">Apt#</th>
                     <th class="col-md-2">Email</th>
-                    <th class="col-md-3">Created_at</th>
+                    <th class="col-md-2">Created_at</th>
                     <th class="col-md-2">User_level</th>
-                    <th class="col-md-2">Actions</th>
+                    <th class="col-md-3">Actions</th>
                 </tr>
                 {% for x in users %}
+                {% if x.apt == session['apt'] %}
                 <tr>
                     <td>{{x.id}}</td>
-                    <td><a href="/wall/{{x.id}}">{{x.first}}&nbsp;{{x.last}}</a></td>
+
+
+                    <td><a data-toggle="modal" data-target="#{{x['id']}}">{{x.first}}</a>
+                      <div class="modal fade" id="{{x['id']}}" role="dialog">
+                        <div class="modal-dialog">
+
+
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Send a Direct Message!</h4>
+                            </div>
+                            <div class="modal-body" style="height:250px;">
+
+
+                                <form action='/dm' method='post'>
+                                <label for="usr">Say something to {{x['first']}}!</label>
+                                <textarea class="form-control" name="dm" rows="5" id="usr"></textarea>
+                                <input type="hidden" name='friend_id' value="{{x['id']}}">
+                                <input type="hidden" name='ad' value="True">
+                                <input type="hidden" name='user_id' value="{{session['userid']}}">
+                                <input type='submit' style="margin-top:10px; margin-bottom:10px;" class="btn pull-right btn-primary"   value="Send">
+                                </form>
+
+
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+
+                    </td>
+
+                    <td>{{x.last}}</td>
                     <td>{{x.email}}</td>
                     <td>{{x.created_at}}</td>
                     {% if x['level'] > 5%}
@@ -84,13 +118,14 @@
                        {% if x['level'] < 5%}
                               <td>Normal</td>
                         {% endif %}
-                      <td>
+                      <td class="col-md-3">
                         <a href="/admin/editpage/{{ x.id }}">edit</a> &nbsp;|&nbsp;
                         <a href="/admin/kick/{{ x.id }}">remove</a>
                         </td>
 
 
                 </tr>
+                  {% endif %}
                 {% endfor %}
 
             </table>
@@ -99,6 +134,8 @@
 </div>
 
     </div>
+
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 

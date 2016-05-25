@@ -21,9 +21,10 @@ class Admin(Controller):
 
     def admin_editpage(self, id):
         user=self.models['Adminmodel'].showone(id)
+        print user
         return self.load_view('adminedit.html', user=user[0])
 
-    def edituser(self, id):
+    def edituser(self):
         info={
             'id': request.form['id'],
             'first':request.form['first'],
@@ -31,6 +32,7 @@ class Admin(Controller):
             'email':request.form['email'],
             'level': request.form['level']
             }
+        print info
         user=self.models['Adminmodel'].userupdate(info)
         return redirect('/admin/dash')
 
@@ -54,3 +56,14 @@ class Admin(Controller):
     def kick(self, id):
         self.models['Adminmodel'].kick(id)
         return redirect ('/admin/dash')
+
+    def addanoun(self):
+        info={
+            'user_id':request.form['user_id'],
+            'content':request.form['anoun'],
+            'apt':request.form['apt']
+        }
+        self.models['Adminmodel'].addanoun(info)
+        apt=session['apt']
+        url="/wall/"+str(apt)
+        return redirect (url)

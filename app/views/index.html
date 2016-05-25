@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>user dashboard</title>
+
+
+    <title>Kastee</title>
 
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -20,33 +18,45 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+<style>
+
+.nav-bar-inverse{color:#006699; background-image:none !important; linear-gradient:0;}
+.jumbotron { min-height: 500px; }
+
+</style>
+
   </head>
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+    <nav class="navbar navbar-custom navbar-fixed-top" style="background-color:#006699;">
+      <div class="container" style="background-color:#006699;">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+
           </button>
-          <a class="navbar-brand" href="/">Kickchen</a>
+
+          <a class="navbar-brand" style="color:white;" href="/">Kastee</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
 
-            <a href="/users/loginpage"><p class="navbar-text">Home</p></a>
+
+
             {% if session['status']==True %}
-            <p class="navbar-text"><a href="/users/dash">Dashoboard</a></p>
-            <p class="navbar-text"><a href="/users/editpage">Profile</a></p>
-            <p class="nav navbar-text navbar-right">You are logged in as {{session['email']}}</p>
+            <p style="color:white;" class="navbar-text"><a style="color:white;"href="/users/dash">Home</a></p>
+            <p style="color:white;" class="navbar-text"><a style="color:white;"href="/users/editpage">My Page</a></p>
+            {% if session['level'] > 5 %}
+            <p class="navbar-text"><a style="color:white;" href="/admin/dash">Admin Dashboard</a></p>
+            {% endif %}
+            <p style="color:white;" class="nav navbar-text navbar-right"><a style="color:white;" href="/users/logout">Log out</a></p>
+            <p style="color:white;" class="nav navbar-text navbar-right">You are logged in as {{session['email']}}</p>
+
             {% endif %}
 
                   {% if session['status']==False %}
-            <p class="nav navbar-text navbar-right"><a href="/users/loginpage">Sign In</a></p>
+            <p class="nav navbar-text navbar-right"><a style="color:white;" href="/users/loginpage">Log In</a></p>
+
                   {% endif %}
 
         </div>
@@ -54,11 +64,15 @@
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Kickchen Test App</h1>
-        <p>Were going to build a cool application using a MVC framework! ok? ok</p>
-        <p><a class="btn btn-primary btn-lg" href="/users/loginpage" role="button">Start</a></p>
+    <div class="jumbotron" style="margin=left:50px; background:url(http://www.landsarch.com/Images/NP9899.jpg)">
+      <div class="container" style="margin-left:50px;">
+        <br /><br /><br /><br />
+        <div style="background-color:#262626; width: 650px; height:240px; padding-left:30px; opacity:1;" class="container pull-left">
+        <h2 style="font-size:40px; color:white; background-color:#262626; opacity:1;">Kastee, <br />Embrace Your Neighborhood</h2>
+        <p style="color:white; background-color:#262626; opacity:1;">Communications between landlords and neighbors made easy</p>
+        <p><a style="opacity:1;" class="btn btn-primary btn-lg" href="/users/registerpage" role="button">Register as Tenant</a>
+        <a style="opacity:1;" class="btn btn-primary btn-lg" href="/users/registerpage/manager" role="button">Register as Manager</a></p>
+        </div>
       </div>
     </div>
 

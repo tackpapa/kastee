@@ -13,25 +13,25 @@ class Wall(Controller):
 
     def show(self, id):
 
-        info={
-            'id':id
-        }
+
         msgs=self.models['Wallmodel'].msgshow()
         cmts=self.models['Wallmodel'].cmtshow()
-        user=self.models['Wallmodel'].usershow(info)
-        return self.load_view('wall.html', user=user[0], msgs=msgs, cmts=cmts)
+
+        all=self.models['Wallmodel'].all()
+        anoun=self.models['Wallmodel'].anoun()
+        return self.load_view('wall.html', msgs=msgs, cmts=cmts, all=all, anoun=anoun)
 
     def msg(self):
         id=session['userid']
         msg=request.form['msg']
-        friend_id=request.form['friend_id']
+        apt=request.form['apt']
         info={
             'id':id,
             'msg':msg,
-            'friend_id':friend_id
+            'apt':apt
         }
         self.models['Wallmodel'].msgpost(info)
-        url="/wall/"+str(friend_id)
+        url="/wall/"+str(apt)
         return redirect (url)
 
     def comment(self):
@@ -39,13 +39,14 @@ class Wall(Controller):
         cmt = request.form['cmt']
         user_id = session['userid']
         friend_id = request.form['friend_id']
+        apt=session['apt']
         info={
             'message_id': msg_id,
             'comment':cmt,
             'user_id': user_id
         }
         self.models['Wallmodel'].cmtpost(info)
-        url="/wall/"+str(friend_id)
+        url="/wall/"+str(apt)
         return redirect (url)
 
     def msgdel(self):
@@ -53,7 +54,8 @@ class Wall(Controller):
         user_id=request.form['walluser']
         info={'message_id':msg_id, 'user_id':user_id}
         self.models['Wallmodel'].msgdel(info)
-        url="/wall/"+str(user_id)
+        apt=session['apt']
+        url="/wall/"+str(apt)
         return redirect (url)
 
     def cmtdel(self):
@@ -62,6 +64,26 @@ class Wall(Controller):
             'id':id
         }
         self.models['Wallmodel'].cmtdel(info)
+        apt=session['apt']
+        url="/wall/"+str(apt)
+        return redirect (url)
 
-        url="/wall/"+str(session['userid'])
+    def dm(self):
+
+        info={
+            'user_id': request.form['user_id'],
+            'friend_id':request.form['friend_id'],
+            'dm': request.form['dm']
+        }
+        self.models['Wallmodel'].dm(info)
+        apt=session['apt']
+        url="/wall/"+str(apt)
+
+        return redirect (url)
+
+    def delanoun(self, id):
+
+        self.models['Wallmodel'].delanoun(id)
+        apt=session['apt']
+        url="/wall/"+str(apt)
         return redirect (url)

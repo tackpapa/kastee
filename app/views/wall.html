@@ -1,123 +1,237 @@
 <html>
 
 <head>
-    <title>wall</title>
-    <link rel="stylesheet" href="/static/css/wall.css" type="text/css">
-
+    <title>Kastee</title>
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-         <!-- Optional theme -->
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-         <!-- Latest compiled and minified JavaScript -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+          <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+.table td, table th{text-align: center;}
+.modal-backdrop {
+  z-index: 0;
+}
+.drop-shadow {
+       -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
+       box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
+   }
+   .container.drop-shadow {
+       padding-left:0;
+       padding-right:0;
+   }
+
+
+</style>
+
 
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-          <div class="navbar-header">
+  <nav class="navbar navbar-custom navbar-fixed-top" style="background-color:#006699;">
+      <div class="container"style="background-color:#006699;">
+          <div class="navbar-header" style="background-color:#006699;">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                   <span class="sr-only">Toggle navigation</span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/">Kickchen</a>
+              <a style="color:white;" class="navbar-brand" href="/">Kastee</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
 
 
-            <p class="navbar-text"><a href="/users/dash">Dashoboard</a></p>
-            <p class="navbar-text"><a href="/users/editpage">Profile</a></p>
-            <p class="nav navbar-text navbar-right"><a href="/users/logout">Log off</a></p>
+            <p class="navbar-text"><a style="color:white;" href="/users/dash">Home</a></p>
+            <p class="navbar-text"><a style="color:white;" href="/users/editpage">My Page</a></p>
+            {% if session['level'] > 5 %}
+            <p class="navbar-text"><a style="color:white;" href="/admin/dash">Admin Dashboard</a></p>
+            {% endif %}
+
+
+            {% if session['level'] > 5 %}
+            <p class="navbar-text"><a style="color:white;" data-toggle="modal" data-target="#{{session['userid']}}">Add Announcement</a></p>
+            <div class="modal fade" id="{{session['userid']}}" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add announcements</h4>
+                  </div>
+                  <div class="modal-body" style="height:250px;">
+                    <form action='/addanoun' method='post'>
+                    <label for="usr">Watch Your Language</label>
+                    <textarea class="form-control" name="anoun" rows="5" id="usr"></textarea>
+                    <input type="hidden" name='user_id' value="{{session['userid']}}">
+                    <input type="hidden" name='apt' value="{{session['apt']}}">
+                    <input type='submit' style="margin-top:10px; margin-bottom:10px;" class="btn pull-right btn-primary"   value="Post">
+                    </form>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            {% endif %}
+
+
+            <p class="nav navbar-text navbar-right"><a style="color:white;" href="/users/logout">Log out</a></p>
           </div>
       </div>
   </nav>
   <br><br><br><br>
 
-  <div class="col-md-10 col-md-offset-1">
-
-  {% if user %}
-<h3>{{user.first}}&nbsp;{{user.last}}</h3><br>
-<P>REGISTERED AT:{{user.created_at}}</P>
-<P>USER ID:#{{user.id}}</P>
-<P>EMAIL:{{user.email}}</P>
-<p>LEAVE A MESSAGE FOR {{user.first}}&nbsp;{{user.last}}</p>
-<hr>
 
 
+<h3 style="text-align:center; padding:0px;">Announcements</h3>
+{% for x in anoun %}
+{% if session['apt'] == x['apt']%}
 
-        <form action='/msg' method='post'>
-        <div class="form-group">
-          <label for="usr">Leave a message</label>
-          <input type="text" class="form-control" name='msg' id="usr">
-          <input type="hidden" name='friend_id' value="{{user.id}}">
-          <input type='submit' class="btn pull-right btn-info"   value="Post">
-        </div>
-      </form>
-
-
-  </div>
-{% endif %}
-        <!-- nav var ends -->
-
-
-
-{% for msg in msgs %}
-{% if msg.friend_id == user.id %}
-
-        <div class='msgs'><h5> {{msg.name}}      {{msg.created_at}}</h5><br>
-          <p>
-            {{msg.message}}
-          </p>
-          {% if session['userid']== msg.id %}
-          <form action='/msgdel' method='post'>
-              <input type='hidden' name='msg_id' value='{{ msg.msg_id }}'>
-              <input type='hidden' name='walluser' value='{{ msg.id }}'>
-               <input type='submit' id='del' name ='del' value='delete'>
-          </form>
-          {% endif %}
-            </div>
-
-
-
-             <div class='com'>
-                          {% for x in cmts %}
-                                                  {% if x.message_id == msg.msg_id %}
-
-                                                    <div class='comme'>
-                                                      {{x.name}}    {{(x.created_at.strftime('%B %d, %Y'))}}<br>
-                                                      {{x.comment}}
-                                                      {% if session['userid']== x.user_id %}
-                                                      <form action='/cmtdel' method='post'>
-                                                          <input type='hidden' name='cmt_id' value='{{ x.cmt_id }}'>
-                                                           <input type='submit' id='del' name ='del' value='delete'>
-                                                      </form>
-                                                      {% endif %}
-
-                                                    </div>
-
-
-                                                  {% endif %}
-                          {% endfor %}
-                        </div>
-
-          <form action='/comment' method='post'>
-              <input type='hidden' name='cmt_id' value='{{ msg.msg_id }}'>
-              <input type="hidden" name='friend_id' value="{{ user.id }}">
-               <input type='text' id='cmtbox' name='cmt' placeholder="type your comment here">
-               <input type='submit' id='butt2' value='post'>
-          </form>
-
+<div class="col-md-12">
+  <h3 style="border-radius:50px; background-color:#D88EA2; text-align:center; color:B21E45; border:2px solid #B21E45; padding-top:5px; padding-bottom:5px; margin-top:5px; margin-bottom:5px;">
+    {{x['content']}}         {% if session['level'] > 5 %}    <a style="color:white;" class="pull-right" href="/delanoun/{{x['id']}}">x&nbsp;&nbsp;</a> {% endif %}
+  </h3>
+</div>
 {% endif %}
 {% endfor %}
 
 
 
+
+
+    <div class="container col-md-9">
+
+
+    <div style="margin-top:15px;" class="form-group col-md-12 col-sm-offset-0" >
+      <form action='/msg' method='post'>
+      <label for="usr">Say something nice to your neighbor!</label>
+      <textarea style="border:2px solid #FF9933;" class="form-control" name="msg" rows="5" id="usr"></textarea>
+      <input type="hidden" name='apt' value="{{session['apt']}}">
+      <input type='submit' style="margin-top:10px;" class="btn pull-right btn-primary"   value="Post">
+      </form>
     </div>
+
+
+
+
+    {% for msg in msgs %}
+    {% if session['apt']==msg['apt'] %}
+
+            <div  class='col-md-12 col-sm-offset-1 drop-shadow' style="background:#FFCC33; margin:10px;">
+                      <p style="font-size:18px; font-weight:700;"> {{msg.last}} - ({{(msg.created_at.strftime('%B %d, %Y'))}})</p><br>
+                        <h4>{{msg.message}}</h4>
+
+                        {% if session['userid']== msg.id or session['level'] > 5 %}
+
+                              <form action='/msgdel' method='post'>
+                                  <input type='hidden' name='msg_id' value='{{ msg.msg_id }}'>
+                                  <input type='hidden' name='walluser' value='{{ msg.id }}'>
+                                   <input type='submit' style="margin-bottom:10px;" class="btn pull-right btn-danger" id='del' name ='del' value='delete'>
+                              </form>
+
+                        {% endif %}
+            </div>
+
+                 <div class='com'>
+                              {% for x in cmts %}
+                                                      {% if x.message_id == msg.msg_id %}
+
+                                                                      <div class='col-md-12 col-md-offset-2' style="background:#ffe084; margin:10px; font-size:15px; font-weight:700;">
+                                                                        {{x.name}}   - ({{(x.created_at.strftime('%B %d, %Y'))}})<br>
+                                                                        {{x.comment}}
+                                                                        {% if session['userid']== x.user_id or session['level'] > 5%}
+                                                                        <form action='/cmtdel' method='post'>
+                                                                            <input type='hidden' name='cmt_id' value='{{ x.cmt_id }}'>
+                                                                             <input type='submit' style="margin-bottom:10px;" class="btn pull-right btn-danger" id='del' name ='del' value='delete'>
+                                                                        </form>
+                                                                        {% endif %}
+
+                                                                      </div>
+
+
+                                                      {% endif %}
+                              {% endfor %}
+                            </div>
+                <div class="col-md-10 col-sm-offset-2" style="background=pink;">
+              <form action='/comment' method='post'>
+                  <input type='hidden' name='cmt_id' value='{{ msg.msg_id }}'>
+                  <input type="hidden" name='friend_id' value="1">
+                   <textarea class="form-control" name='cmt' style="border:2px solid #FFCC33;" rows="4" id="cmtbox">write your comments here</textarea>
+                   <input type='submit' style="margin-top:10px;"id='butt2' class="btn pull-right btn-primary" value='post'>
+              </form>
+              </div>
+
+    {% endif %}
+    {% endfor %}
+
+
+
+  </div>
+  <div class="container col-md-3">
+    <p style="color: red; text-align:center; font-size:20px; margin-top:20px;">
+      Search Car Plate #<br />
+    </p>
+    <input type"text" class="col-md-12" style="margin-bottom:20px;">
+
+    <table style="margin-top:30px;" class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="col-md-3" style="text-align:center;">Talk to your neighbors</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for x in all %}
+          {% if x['apt'] == session['apt']%}
+          {% if x['id'] != session['userid'] %}
+          <tr>
+            <td class="col-md-2" >
+              <a style="font-size:20px;"  style="color:#11ADAD; text-decoration:none;" data-toggle="modal" data-target="#{{x['id']}}">
+                {% if x['level'] > 5 %}Manager -{% endif %}
+                #{{x['last']}}</a>
+              </td>
+              <div class="modal fade" id="{{x['id']}}" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Send a Direct Message!</h4>
+                    </div>
+                    <div class="modal-body" style="height:250px;">
+
+                      {# <div class="form-group col-md-12 col-sm-offset-0" > #}
+                        <form action='/dm' method='post'>
+                        <label for="usr">Say something to {{x['first']}}!</label>
+                        <textarea class="form-control" name="dm" rows="5" id="usr"></textarea>
+                        <input type="hidden" name='friend_id' value="{{x['id']}}">
+                        <input type="hidden" name='user_id' value="{{session['userid']}}">
+                        <input type='submit' style="margin-top:10px; margin-bottom:10px;" class="btn pull-right btn-primary"   value="Send">
+                        </form>
+
+                      {# </div> #}
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+          </tr>
+          {% endif %}
+          {% endif %}
+
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 
 </body>
 

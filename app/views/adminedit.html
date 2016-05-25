@@ -34,7 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Kickchen</a>
+                <a class="navbar-brand" href="/">Kastee</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
 
@@ -58,15 +58,20 @@
             {% if user %}
         <div class="col-md-3 col-md-offset-1">
             <h3>Edit User #{{user.id}} </h3>
+
             <form action='/admin/edituser' method='post'>
                 <div class="form-group">
                     <input type="hidden" class="form-control" name="id" value="{{user.id}}">
+
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" name="email" value="{{user.email}}">
-                    <label for="pw">First name</label>
-                    <input type="text" class="form-control" first="first" value="{{user.first}}">
-                    <label for="pw">Last name</label>
-                    <input type="text" class="form-control" last="last" value="{{user.last}}"><br>
+                    <input type="email" class="form-control" name="email" value="{{user.email}}"><br>
+
+                    <label for="">Name</label>
+                    <input type="text" class="form-control" name="first" value="{{user.first}}"><br>
+
+                    <label for="">Alias</label>
+                    <input type="text" class="form-control" name="last" value="{{user.last}}"><br>
+
                     <div class="form-group">
                       <label for="level">User Level</label>
                       <select class="form-control" name="level">
