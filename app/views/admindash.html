@@ -65,6 +65,7 @@
                     <th class="col-md-1">Name</th>
                     <th class="col-md-1">Apt#</th>
                     <th class="col-md-2">Email</th>
+                    <th class="col-md-1">Car Plate</th>
                     <th class="col-md-2">Created_at</th>
                     <th class="col-md-2">User_level</th>
                     <th class="col-md-3">Actions</th>
@@ -111,6 +112,7 @@
 
                     <td>{{x.last}}</td>
                     <td>{{x.email}}</td>
+                    <td>{{x.car}}</td>
                     <td>{{x.created_at}}</td>
                     {% if x['level'] > 5%}
                              <td>Admin</td>

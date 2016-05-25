@@ -8,14 +8,15 @@ class Usersmodel(Model):
     def register(self, info):
         pw = info['pw']
         hashed_pw = self.bcrypt.generate_password_hash(pw)
-        query = "INSERT into users (first, last, email, created_at, updated_at, pw, level, apt) values(:first, :last, :email, NOW(), NOW(), :pw, :level, :apt)"
+        query = "INSERT into users (first, last, email, created_at, updated_at, pw, level, apt, car) values(:first, :last, :email, NOW(), NOW(), :pw, :level, :apt, :car)"
         data = {
         'first': info['first'],
         'last': info['last'],
         'email': info['email'],
         'pw':hashed_pw,
         'level':info['level'],
-        'apt':info['apt']
+        'apt':info['apt'],
+        'car':info['car']
         }
         self.db.query_db(query, data)
 
