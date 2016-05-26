@@ -32,7 +32,7 @@ class Wallmodel(Model):
 
 
     def cmtshow(self):
-        query = "select comments.id as cmt_id, comments.created_at, comments.message_id, comments.user_id, comments.comment, concat(users.first, users.last) as name from comments left join users on comments.user_id=users.id"
+        query = "select comments.id as cmt_id, comments.created_at, comments.message_id, comments.user_id, comments.comment, users.first, users.last from comments left join users on comments.user_id=users.id"
         return self.db.query_db(query)
 
     def usershow(self, info):

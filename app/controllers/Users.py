@@ -53,7 +53,7 @@ class Users(Controller):
         session['email']=[]
         session['userid']=[]
         session['status']=False
-        return redirect('/users/loginpage')
+        return redirect('/')
 ######################################################################################################################
     def register_page(self):
         return self.load_view('register.html')
@@ -231,3 +231,13 @@ class Users(Controller):
     def manager(self):
         session['mag']=True
         return self.load_view('manager.html')
+
+    def profile(self):
+        info={
+            'id':session['userid']
+        }
+
+        all=self.models['Wallmodel'].all()
+
+
+        return self.load_view('profile.html', all=all)

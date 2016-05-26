@@ -2,6 +2,7 @@
 
 <head>
     <title>Kastee</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -23,6 +24,8 @@
    }
 
 
+</style>
+<style>*{font-family: 'Montserrat', sans-serif;}
 </style>
 
 
@@ -86,13 +89,13 @@
 
 
 
-<h3 style="text-align:center; padding:0px;">Announcements</h3>
+<h3 style="text-align:center; padding:0px;">Important Announcements!</h3>
 {% for x in anoun %}
 {% if session['apt'] == x['apt']%}
 
 <div class="col-md-12">
   <h3 style="border-radius:50px; background-color:#D88EA2; text-align:center; color:B21E45; border:2px solid #B21E45; padding-top:5px; padding-bottom:5px; margin-top:5px; margin-bottom:5px;">
-    {{x['content']}}         {% if session['level'] > 5 %}    <a style="color:white;" class="pull-right" href="/delanoun/{{x['id']}}">x&nbsp;&nbsp;</a> {% endif %}
+    {{x['content']}}         {% if session['level'] > 5 %}    <a style="color:black;" class="pull-right" href="/delanoun/{{x['id']}}">x&nbsp;&nbsp;</a> {% endif %}
   </h3>
 </div>
 {% endif %}
@@ -107,7 +110,7 @@
 
     <div style="margin-top:15px;" class="form-group col-md-12 col-sm-offset-0" >
       <form action='/msg' method='post'>
-      <label for="usr">Say something nice to your neighbor!</label>
+      <label for="usr">Leave a message!</label>
       <textarea style="border:2px solid #FF9933;" class="form-control" name="msg" rows="5" id="usr"></textarea>
       <input type="hidden" name='apt' value="{{session['apt']}}">
       <input type='submit' style="margin-top:10px;" class="btn pull-right btn-primary"   value="Post">
@@ -140,7 +143,7 @@
                                                       {% if x.message_id == msg.msg_id %}
 
                                                                       <div class='col-md-12 col-md-offset-2' style="background:#ffe084; margin:10px; font-size:15px; font-weight:700;">
-                                                                        {{x.name}}   - ({{(x.created_at.strftime('%B %d, %Y'))}})<br>
+                                                                        {{x.last}}   - ({{(x.created_at.strftime('%B %d, %Y'))}})<br>
                                                                         {{x.comment}}
                                                                         {% if session['userid']== x.user_id or session['level'] > 5%}
                                                                         <form action='/cmtdel' method='post'>
@@ -159,7 +162,7 @@
               <form action='/comment' method='post'>
                   <input type='hidden' name='cmt_id' value='{{ msg.msg_id }}'>
                   <input type="hidden" name='friend_id' value="1">
-                   <textarea class="form-control" name='cmt' style="border:2px solid #FFCC33;" rows="4" id="cmtbox">write your comments here</textarea>
+                   <textarea class="form-control" name='cmt' style="border:2px solid #FFCC33;" placeholder="write your comments here "rows="4" id="cmtbox"></textarea>
                    <input type='submit' style="margin-top:10px;"id='butt2' class="btn pull-right btn-primary" value='post'>
               </form>
               </div>

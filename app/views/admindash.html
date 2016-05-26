@@ -8,12 +8,15 @@
 
 
     <title>Admin</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+     <style>*{font-family: 'Montserrat', sans-serif;}
+     </style>
 
 </head>
 
@@ -122,7 +125,31 @@
                         {% endif %}
                       <td class="col-md-3">
                         <a href="/admin/editpage/{{ x.id }}">edit</a> &nbsp;|&nbsp;
-                        <a href="/admin/kick/{{ x.id }}">remove</a>
+
+
+                        <a data-toggle="modal" data-target="#{{x.first}}" href="">remove</a>
+                        <div class="modal fade" id="{{x.first}}" role="dialog">
+                          <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Do you really want to delete user?</h4>
+                              </div>
+                              <div class="modal-body" style="height:100px;">
+                                  <h2>
+                                     User:&nbsp;{{x.first}}
+                                  </h2>
+                              </div>
+                              <div class="modal-footer">
+                                  <a class="btn pull-right btn-danger"   href="/admin/kick/{{x.id}}">Delete</a>
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </div>
                         </td>
 
 

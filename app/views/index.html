@@ -8,7 +8,7 @@
 
 
     <title>Kastee</title>
-
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -23,6 +23,8 @@
 .nav-bar-inverse{color:#006699; background-image:none !important; linear-gradient:0;}
 .jumbotron { min-height: 500px; }
 
+</style>
+<style>*{font-family: 'Montserrat', sans-serif;}
 </style>
 
   </head>
@@ -50,7 +52,7 @@
             <p class="navbar-text"><a style="color:white;" href="/admin/dash">Admin Dashboard</a></p>
             {% endif %}
             <p style="color:white;" class="nav navbar-text navbar-right"><a style="color:white;" href="/users/logout">Log out</a></p>
-            <p style="color:white;" class="nav navbar-text navbar-right">You are logged in as {{session['email']}}</p>
+            <p style="color:white;" class="nav navbar-text navbar-right">You are logged in as {{session['first']}}</p>
 
             {% endif %}
 
@@ -67,7 +69,7 @@
     <div class="jumbotron" style="margin=left:50px; background:url(http://www.landsarch.com/Images/NP9899.jpg)">
       <div class="container" style="margin-left:50px;">
         <br /><br /><br /><br />
-        <div style="background-color:#262626; width: 650px; height:240px; padding-left:30px; opacity:1;" class="container pull-left">
+        <div style="background-color:#262626; width: 650px; height:260px; padding-left:30px; opacity:1;" class="container pull-left">
         <h2 style="font-size:40px; color:white; background-color:#262626; opacity:1;">Kastee, <br />Embrace Your Neighborhood</h2>
         <p style="color:white; background-color:#262626; opacity:1;">Communications between landlords and neighbors made easy</p>
         <p><a style="opacity:1;" class="btn btn-primary btn-lg" href="/users/registerpage" role="button">Register as Tenant</a>

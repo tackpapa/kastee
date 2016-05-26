@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>My Page</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+     <link rel="stylesheet" href="/resources/demos/style.css">
+     <style>*{font-family: 'Montserrat', sans-serif;}
+     </style>
+
+</head>
+
+<body>
+
+
+
+
+
+    <nav class="navbar navbar-custom navbar-fixed-top" style="background-color:#006699;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="color:white;"href="/">Kastee</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+
+
+              <p class="navbar-text"><a style="color:white;"href="/users/dash">Home</a></p>
+              <p class="navbar-text"><a style="color:white;"href="/users/editpage">My Page</a></p>
+              <p class="nav navbar-text navbar-right"><a style="color:white;"href="/users/logout">Log out</a></p>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+            <div class="col-md-4 col-md-offset-4">
+                <h3 style="color:#006699;">Edit Profile</h3>
+                <form action='/users/edit' method='post'>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="text" class="form-control" name="email" value='{{ session['email'] }}'>
+                        <label for="pw">Name</label>
+                        <input type="text" class="form-control" name="first" value='{{ session['first' ]}}'>
+                        <label for="pw">Apt #</label>
+                        <input type="text" class="form-control" name="last" value='{{ session['last'] }}'>
+                        <br />
+                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+                <h3 style="color:#006699;">Change Password</h3>
+                <form action='/users/pw' method='post'>
+                    <div class="form-group">
+                        <label for="pw">New Password</label>
+                        <input type="password" class="form-control" name="pw">
+                        <label for="pw">Confirm New Password</label>
+                        <input type="password" class="form-control" name="cpw"><br />
+                        <button type="submit" class="btn btn-primary pull-right">Update password</button>
+                    </div>
+                </form>
+            </div>
+
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+</body>
+
+</html>
