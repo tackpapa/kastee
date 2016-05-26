@@ -53,6 +53,7 @@ class Users(Controller):
         session['email']=[]
         session['userid']=[]
         session['status']=False
+        session['apt'] = []
         return redirect('/')
 ######################################################################################################################
     def register_page(self):
