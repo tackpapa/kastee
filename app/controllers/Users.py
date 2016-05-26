@@ -110,7 +110,8 @@ class Users(Controller):
         'car':request.form['car']
         }
         self.models['Usersmodel'].register(info)
-
+        if session['level'] > 5:
+            return redirect ('/admin/dash')
         return redirect ('/users/loginpage')
 
     def regimanager(self):
