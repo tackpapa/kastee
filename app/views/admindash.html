@@ -127,9 +127,9 @@
                         <a href="/admin/editpage/{{ x.id }}">edit</a> &nbsp;|&nbsp;
 
 
-                        <a data-toggle="modal" data-target="#{{x['first'].strip(" ")}}">remove</a>
+                        <a data-toggle="modal" data-target="#{{ x.email }}">remove</a>
 
-                        <div class="modal fade" id="{{x.first}}" role="dialog">
+                        <div class="modal fade" id="{{ x.email }}" role="dialog">
                           <div class="modal-dialog">
 
                             <!-- Modal content-->
