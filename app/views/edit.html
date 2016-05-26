@@ -168,7 +168,7 @@
 
                           {# <div class="form-group col-md-12 col-sm-offset-0" > #}
                             <form action='/dm' method='post'>
-                            <label for="usr">Say something to {{x['first']}}!</label>
+                            <label for="usr">Say something to {{x['first'].strip(" ")}}!</label>
                             <textarea class="form-control" name="dm" rows="5" id="usr"></textarea>
                             <input type="hidden" name='friend_id' value="{{x['id']}}">
                             <input type="hidden" name='user_id' value="{{session['userid']}}">
