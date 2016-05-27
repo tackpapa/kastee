@@ -78,7 +78,7 @@
 
 
 <h3 style="margin-left:30px; color:#006699;">Your Private Messages</h3>
-
+ {% if dms %}
     {% for dm in dms %}
 
 
@@ -90,8 +90,7 @@
 
                               <form action='/dmdel' method='post'>
                                   <input type='hidden' name='dm_id' value='{{ dm.id }}'>
-
-                                   <input type='submit' class="btn pull-right btn-primary" id='del' name ='del' value='delete'>
+                                   <input type='submit' class="btn pull-right btn-primary" id='del' name ='del' style="margin-bottom:10px;" value='delete'>
                               </form>
 
 
@@ -99,9 +98,10 @@
 
 
 
-      
+
 
     {% endfor %}
+    {% endif %}
 
 
 
