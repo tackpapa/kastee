@@ -80,7 +80,7 @@
 <h3 style="margin-left:30px; color:#006699;">Your Private Messages</h3>
 
     {% for dm in dms %}
-    {% if len(dm.last) != 0 %}
+
 
             <div class='col-md-12 pull-left' style="background:#11ADAD; margin:10px;">
                       <p style="color:white; font-size:25px;"> From:&nbsp; {{ dm.last }} - ({{(dm.created_at.strftime('%B %d, %Y'))}})</p><br>
@@ -99,7 +99,7 @@
 
 
 
-            {% endif %}
+      
 
     {% endfor %}
 
