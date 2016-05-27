@@ -89,4 +89,6 @@ class Wall(Controller):
         return redirect (url)
 
     def around(self):
-        return self.load_view('place.html')
+
+
+        return self.load_view('place2.html')
