@@ -2,9 +2,11 @@
 <html>
   <head>
     <title>Around</title>
+      <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
+  *{font-family: 'Montserrat', sans-serif;}
       html, body {
         height: 100%;
         margin: 0;
@@ -427,8 +429,8 @@
           <input type="text" name="cityname" id="cityname" placeholder="City Name">
           <input type="submit" value="Search Weather">
         </form>
-        <div id="weather_city"></div>
-        <div id="temp"></div>
+        <div style="color:#006699; margin-left:30px; border:1px solid orange;" id="weather_city"></div>
+        <div style="margin-left:30px; border:1px solid orange;"id="temp"></div>
     </div>
 
 
@@ -459,17 +461,22 @@
 
     <!--<input id="origin-input" class="controls" type="text" placeholder="Enter an origin location"> -->
 <div class="row">
+  <div class="col-md-12">
+
+
   <div class="col-md-6">
 
 
   <div id="map" class="in_blk" style="margin-left:50px; width: 600px; height:500px; margin-top:50px; border:2px solid orange; border-radius:50px;"></div>
 </div>
+
 <div class="col-md-6">
 
 
   <div id="list" class="in_blk col-md-4"></div>
   <a href=""></a>
   </div>
+</div>
 </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKZ8QN9eC4BZFN0I_kx1jYeeG-oSV7XoM&libraries=places&callback=initMap" async defer></script>
