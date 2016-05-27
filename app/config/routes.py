@@ -31,3 +31,4 @@ routes['POST']['/addanoun'] = 'Admin#addanoun'
 routes['GET']['/users/registerpage/manager'] = "Users#manager"
 routes['GET']['/users/profile'] = "Users#profile"
 routes['POST']['/dmdel'] = "Users#dmdel"
+rountes['GET']['/around'] = "Users#around"
