@@ -24,13 +24,7 @@ class DevelopmentDBConfig(DBConfig):
 
 """ Put Staging Specific Configurations here """
 class StagingDBConfig(DBConfig):
-    DB_USERNAME = 'root'class MODELNAMEListView(ListView):
-        context_object_name = 'CONTEXT_OBJECT_NAME'
-        model = MODELNAME
-        page_kwarg = 'page'
-        paginate_by =
-        template_name = 'TEMPLATE_NAME'
-
+    DB_USERNAME = 'root'
     DB_PASSWORD = 'root'
     DB_DATABASE_NAME = 'kastee'
     DB_HOST = 'localhost'
