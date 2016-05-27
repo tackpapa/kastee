@@ -96,37 +96,8 @@
                         {% endif %}
             </div>
 
-                 <div class='com'>
-                              {% for x in dmcmts %}
-                                                      {% if x.dm_id == dm.id %}
-
-                                                                      <div class='col-md-12 pull-left' style="background:#9FDEDE; margin:10px;">
-                                                                        <p style="color:white; font-size:20px;">
-                                                                          From:&nbsp;{{x.last}}&nbsp;&nbsp; - ({{(x.created_at.strftime('%B %d, %Y'))}})<br>
-                                                                        </p>
-                                                                        {{x.dmcomment}}
-                                                                        {% if session['userid']== x.user_id %}
-                                                                        <form action='/dmcmtdel' method='post'>
-                                                                            <input type='hidden' name='dmcmt_id' value='{{ x.dmcmt_id }}'>
-                                                                             <input type='submit' style="margin-bottom:10px;" class="btn pull-right btn-primary" id='del' name ='del' value='delete'>
-                                                                        </form>
-                                                                        {% endif %}
-
-                                                                      </div>
 
 
-                                                      {% endif %}
-                              {% endfor %}
-                            </div>
-
-                <div class="col-md-12 pull-left">
-              <form action='/dmcomment' method='post'>
-                  <input type='hidden' name='dm_id' value='{{ dm.id }}'>
-                  <input type="hidden" name='user_id' value="{{ session['userid'] }}">
-                   <textarea class="form-control" name='dmcmt' rows="3" id="cmtbox" placeholder="write your comments here"></textarea>
-                   <input type='submit' id='butt2' style="margin-top:10px;" class="btn pull-right btn-primary" value='post'>
-              </form>
-              </div>
 
 
     {% endfor %}
