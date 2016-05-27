@@ -250,7 +250,3 @@ class Users(Controller):
             }
         self.models['Usersmodel'].dmdel(info)
         return redirect ('/users/editpage')
-
-
-    def around(self):
-        return self.load_view('place.html')
