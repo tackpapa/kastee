@@ -77,12 +77,12 @@
 <div class="col-md-8">
 
 
-<h3 style="margin-left:250px; color:#006699;">Your Private Messages</h3>
+<h3 style="margin-left:30px; color:#006699;">Your Private Messages</h3>
 
     {% for dm in dms %}
 
             <div class='col-md-12 pull-left' style="background:#11ADAD; margin:10px;">
-                      <p style="color:white; font-size:25px;"> From:&nbsp;{{dm.name}} - ({{(dm.created_at.strftime('%B %d, %Y'))}})</p><br>
+                      <p style="color:white; font-size:25px;"> From:&nbsp;{{dm.last}} - ({{(dm.created_at.strftime('%B %d, %Y'))}})</p><br>
                         <h4>{{dm.dm}}</h4>
 
                         {% if session['userid']== dm.user_id %}
@@ -102,7 +102,7 @@
 
                                                                       <div class='col-md-12 pull-left' style="background:#9FDEDE; margin:10px;">
                                                                         <p style="color:white; font-size:20px;">
-                                                                          From:&nbsp;{{x.name}}&nbsp;&nbsp; - ({{(x.created_at.strftime('%B %d, %Y'))}})<br>
+                                                                          From:&nbsp;{{x.last}}&nbsp;&nbsp; - ({{(x.created_at.strftime('%B %d, %Y'))}})<br>
                                                                         </p>
                                                                         {{x.dmcomment}}
                                                                         {% if session['userid']== x.user_id %}

@@ -78,14 +78,14 @@ class Usersmodel(Model):
                 return self.db.query_db(query, data)
 
     def dms(self, info):
-        query="select dms.id, dms.dm, dms.user_id, dms.friend_id, dms.created_at, concat(users.first, users.last) as name from dms left join users on users.id=dms.user_id where dms.friend_id=:id order by created_at desc"
+        query="select dms.id, dms.dm, dms.user_id, dms.friend_id, dms.created_at, users.first, users.last from dms left join users on users.id=dms.user_id where dms.friend_id=:id order by created_at desc"
         data={
             'id':info['id']
         }
         return self.db.query_db(query, data)
 
     def dmcmts(self):
-        query="SELECT dmcomments.id as dmcmt_id, dmcomments.created_at, dmcomments.dm_id, dmcomments.user_id, dmcomments.dmcomment, concat(users.first, users.last) as name from dmcomments left join users on dmcomments.user_id=users.id"
+        query="SELECT dmcomments.id as dmcmt_id, dmcomments.created_at, dmcomments.dm_id, dmcomments.user_id, dmcomments.dmcomment, users.first, users.last from dmcomments left join users on dmcomments.user_id=users.id"
         return self.db.query_db(query)
 
     def dmcomment(self, info):
