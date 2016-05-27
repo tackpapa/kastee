@@ -78,18 +78,18 @@
 
 
 <h3 style="margin-left:30px; color:#006699;">Your Private Messages</h3>
- {% if dms %}
+
     {% for dm in dms %}
 
 
             <div class='col-md-12 pull-left' style="background:#11ADAD; margin:10px;">
-                      <p style="color:white; font-size:25px;"> From:&nbsp; {{ dm.last }} - ({{(dm.created_at.strftime('%B %d, %Y'))}})</p><br>
+                      <p style="color:white; font-size:25px;"> From:&nbsp; {{dm.last}} - ({{(dm.created_at.strftime('%B %d, %Y'))}})</p><br>
                         <h4>{{dm.dm}}</h4>
 
 
 
                               <form action='/dmdel' method='post'>
-                                  <input type='hidden' name='dm_id' value='{{ dm.id }}'>
+                                  <input type='hidden' name='dm_id' value='{{dm.id}}'>
                                    <input type='submit' class="btn pull-right btn-primary" id='del' name ='del' style="margin-bottom:10px;" value='delete'>
                               </form>
 
@@ -101,7 +101,7 @@
 
 
     {% endfor %}
-    {% endif %}
+
 
 
 
