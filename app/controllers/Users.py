@@ -69,7 +69,7 @@ class Users(Controller):
         code=self.models['Usersmodel'].aptsearch(thecode)
 
         if len(request.form['car']) == 0:
-            request.form['car'] =1
+            pass
 
         if code == False:
             flash('Your apartment has not registered yet, or invalid code')
@@ -110,7 +110,7 @@ class Users(Controller):
         'car':request.form['car']
         }
         self.models['Usersmodel'].register(info)
-    
+
         return redirect ('/users/loginpage')
 
     def regimanager(self):
