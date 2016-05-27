@@ -349,20 +349,61 @@
     </script>
   </head>
   <body>
-  <ul class="nav nav-tabs">
-    <li><a href="">Home</a></li>
-    <li><a href="">Messages</a></li>
-  <li role="presentation" class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-      Dropdown <span class="caret"></span>
-    </a>
+    <nav class="navbar navbar-custom navbar-fixed-top" style="background-color:#006699;">
+        <div class="container"style="background-color:#006699;">
+            <div class="navbar-header" style="background-color:#006699;">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a style="color:white;" class="navbar-brand" href="/">Kastee</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
 
-    <ul class="dropdown-menu">
-    </ul>
-  </li>
-  <li><a href="">Log Out</a></li>
-</ul>
-  <div id="info" ></div>
+
+              <p class="navbar-text"><a style="color:white;" href="/users/dash">Home</a></p>
+              <p class="navbar-text"><a style="color:white;" href="/users/editpage">My Page</a></p>
+              {% if session['level'] > 5 %}
+              <p class="navbar-text"><a style="color:white;" href="/admin/dash">Admin Dashboard</a></p>
+              {% endif %}
+
+
+              {% if session['level'] > 5 %}
+              <p class="navbar-text"><a style="color:white;" data-toggle="modal" data-target="#{{session['userid']}}">Add Announcement</a></p>
+              <div class="modal fade" id="{{session['userid']}}" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add announcements</h4>
+                    </div>
+                    <div class="modal-body" style="height:250px;">
+                      <form action='/addanoun' method='post'>
+                      <label for="usr">Watch Your Language</label>
+                      <textarea class="form-control" name="anoun" rows="5" id="usr"></textarea>
+                      <input type="hidden" name='user_id' value="{{session['userid']}}">
+                      <input type="hidden" name='apt' value="{{session['apt']}}">
+                      <input type='submit' style="margin-top:10px; margin-bottom:10px;" class="btn pull-right btn-primary"   value="Post">
+                      </form>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+              {% endif %}
+              <p class="navbar-text"><a style="color:white;"href="/around">Around</a></p>
+
+
+              <p class="nav navbar-text navbar-right"><a style="color:white;" href="/users/logout">Log out</a></p>
+            </div>
+        </div>
+    </nav>
+    <br><br><br><br>
   <div class="row">
 
     <div class="col-xs-6 col-sm-4">
