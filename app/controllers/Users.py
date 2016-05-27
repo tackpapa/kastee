@@ -136,7 +136,7 @@ class Users(Controller):
 
 
         if len(request.form['pw']) < 2:
-            flash("password should be longer than 2letters!")
+            flash("password should be longer than 2 letters!")
             error=True
 
         pw = request.form['pw']
@@ -249,6 +249,6 @@ class Users(Controller):
             }
         self.models['Usersmodel'].dmdel(info)
         return redirect ('/users/editpage')
-        
+
     def around(self):
         return self.load_view('place2.html')
