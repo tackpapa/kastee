@@ -423,15 +423,16 @@
         <label for="changemode-transit">Transit</label>
       </div>
         <button id="back_home" style="margin-left:80px;" class="btn btn-primary">Back to your current location</button>
+        <form id='getweather'>
+          <input type="text" name="cityname" id="cityname" placeholder="City Name">
+          <input type="submit" value="Search Weather">
+        </form>
+        <div id="weather_city"></div>
+        <div id="temp"></div>
     </div>
-    <div class="container">
-      <form id='getweather'>
-        <input type="text" name="cityname" id="cityname" placeholder="City Name">
-        <input type="submit" value="Search Weather">
-      </form>
-      <div id="weather_city"></div>
-      <div id="temp"></div>
-    </div>
+
+
+
 
         <div class="container col-md-4">
     <h3>One Click Search</h3>
@@ -461,7 +462,7 @@
   <div class="col-md-6">
 
 
-  <div id="map" class="in_blk" style="margin-left:50px; height:500px; margin-top:50px; border:2px solid orange; border-radius:50px;"></div>
+  <div id="map" class="in_blk" style="margin-left:50px; width: 600px; height:500px; margin-top:50px; border:2px solid orange; border-radius:50px;"></div>
 </div>
 <div class="col-md-6">
 
