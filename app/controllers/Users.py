@@ -117,7 +117,7 @@ class Users(Controller):
         error=False
 
         if len(request.form['car']) == 0:
-            request.form['car'] =1
+            pass
 
         if len(request.form['apt']) == 0:
             flash('You should make a code for your apt')
@@ -249,3 +249,6 @@ class Users(Controller):
             }
         self.models['Usersmodel'].dmdel(info)
         return redirect ('/users/editpage')
+        
+    def around(self):
+        return self.load_view('place2.html')

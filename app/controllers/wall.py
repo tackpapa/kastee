@@ -87,6 +87,3 @@ class Wall(Controller):
         apt=session['apt']
         url="/wall/"+str(apt)
         return redirect (url)
-
-    def around(self):
-        return self.load_view('place2.html')
