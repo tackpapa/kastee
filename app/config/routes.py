@@ -30,4 +30,4 @@ routes['/delanoun/<id>'] = 'Wall#delanoun'
 routes['POST']['/addanoun'] = 'Admin#addanoun'
 routes['GET']['/users/registerpage/manager'] = "Users#manager"
 routes['GET']['/users/profile'] = "Users#profile"
-routes['POST']['/dmdel/<id>'] = "Users#dmdel"
+routes['POST']['/dmdel'] = "Users#dmdel"

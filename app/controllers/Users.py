@@ -244,6 +244,7 @@ class Users(Controller):
 
         return self.load_view('profile.html', all=all)
 
-    def dmdel(self, id):
+    def dmdel(self):
+        id=request.form['dm_id']
         self.models['Usersmodel'].dmdel(id)
         return redirect ('/users/editpage')
