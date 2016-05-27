@@ -104,9 +104,9 @@ class Usersmodel(Model):
         }
         return self.db.query_db (query, data)
 
-    def dmdel(self, id):
+    def dmdel(self, info):
         query="delete from dms where id=:id"
         data={
-            'id':  id
+            'id':  info['id']
         }
         return self.db.query_db (query, data)
