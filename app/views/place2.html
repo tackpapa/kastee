@@ -348,53 +348,97 @@
     </script>
   </head>
   <body>
-  <ul class="nav nav-tabs">
-    <li><a href="">Home</a></li>
-    <li><a href="">Messages</a></li>
-  <li role="presentation" class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-      Dropdown <span class="caret"></span>
-    </a>
+    <nav class="navbar navbar-custom navbar-fixed-top" style="background-color:#006699;">
+        <div class="container"style="background-color:#006699;">
+            <div class="navbar-header" style="background-color:#006699;">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a style="color:white;" class="navbar-brand" href="/">Kastee</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
 
-    <ul class="dropdown-menu">
-    </ul>
-  </li>
-  <li><a href="">Log Out</a></li>
-</ul>
-  <div id="info" ></div>
-  <div class="row">
 
-    <div class="col-xs-6 col-sm-4">
-      <!--<form id ="search_location" >
-        <input id="street" type="text" name="street" placeholder="Steet" class="form-control">
-        <input id="city" type="text" name="city" placeholder="City" class="form-control">
-        <input id="state" type="text" name="state" placeholder="State" class="form-control">
-        <input type="submit" value="Search Location " class="btn btn-success">
-      </form>
-      -->
+              <p class="navbar-text"><a style="color:white;" href="/users/dash">Home</a></p>
+              <p class="navbar-text"><a style="color:white;" href="/users/editpage">My Page</a></p>
+              {% if session['level'] > 5 %}
+              <p class="navbar-text"><a style="color:white;" href="/admin/dash">Admin Dashboard</a></p>
+              {% endif %}
+
+
+              {% if session['level'] > 5 %}
+              <p class="navbar-text"><a style="color:white;" data-toggle="modal" data-target="#{{session['userid']}}">Add Announcement</a></p>
+              <div class="modal fade" id="{{session['userid']}}" role="dialog">
+                <div class="modal-dialog">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add announcements</h4>
+                    </div>
+                    <div class="modal-body" style="height:250px;">
+                      <form action='/addanoun' method='post'>
+                      <label for="usr">Watch Your Language</label>
+                      <textarea class="form-control" name="anoun" rows="5" id="usr"></textarea>
+                      <input type="hidden" name='user_id' value="{{session['userid']}}">
+                      <input type="hidden" name='apt' value="{{session['apt']}}">
+                      <input type='submit' style="margin-top:10px; margin-bottom:10px;" class="btn pull-right btn-primary"   value="Post">
+                      </form>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+              {% endif %}
+              <p class="navbar-text"><a style="color:white;" href="/around">Around</a></p>
+              <div class="col-md-4">
+                <form id='getweather'>
+                  <input type="text" name="cityname" id="cityname" placeholder="City Name">
+                  <input type="submit" value="Search Weather">
+                </form>
+                <div id="weather_city"></div>
+                <div id="temp"></div>
+              </div>
+
+
+              <p class="nav navbar-text navbar-right"><a style="color:white;" href="/users/logout">Log out</a></p>
+            </div>
+        </div>
+    </nav>
+    <br><br><br><br>
+
+
+    <div class="col-md-4 col-md-offset-2">
+
       <input id="destination-input" type="text" placeholder="Enter Address" class="form-control">
       <div id="mode-selector">
-        <input type="radio" name="type" id="changemode-driving" checked="checked">
+        <input type="radio" style="margin-left:10px;" name="type" id="changemode-driving" checked="checked">
         <label for="changemode-driving">Driving</label>
 
-        <input type="radio" name="type" id="changemode-walking" >
+        <input type="radio" style="margin-left:10px;" name="type" id="changemode-walking" >
         <label for="changemode-walking">Walking</label>
 
-        <input type="radio" name="type" id="changemode-transit">
+        <input type="radio" style="margin-left:10px;" name="type" id="changemode-transit">
         <label for="changemode-transit">Transit</label>
       </div>
-        <button id="back_home" class="btn btn-primary">Back to Home</button>
+        <button id="back_home" class="btn btn-primary pull-right">Back to your current location</button>
     </div>
-        <!--<button id="home">Back to Home</button>//-->
-    <h3>One Click Search Nearby</h3>
-    <div class="col-xs-2">
+
+        <div class="container col-md-4">
+    <h3>One Click Search</h3>
+    <div class="col-md-12">
         <button id ='restaurant' value="restaurant" class="btn btn-primary btn-block">Restaurants</button>
         <button id="gas" value="gas station" class="btn btn-primary btn-block">Gas Stations</button>
         <button id="bank" value="bank" class="btn btn-primary btn-block">Banks</button>
         <button id="shipping" value="post_office" class="btn btn-primary btn-block">Shipping & Mailing</button>
         <button id="dry_clean" value="dry_clean" class="btn btn-primary btn-block">Dry Cleaning</button>
     </div>
-    <div class="col-xs-2">
+    <div class="col-md-12">
         <button id="convenience_store" value="convenience_store" class="btn btn-primary btn-block">Convenience Stores</button>
         <button id="supermarket" value="supermarket" class="btn btn-primary btn-block">Supermarkets</button>
         <button id="dept_store" value="department_store" class="btn btn-primary btn-block">Department Stores</button>
@@ -402,21 +446,16 @@
         <button id="hostipal" value="hostipal" class="btn btn-primary btn-block">Hostipals</button>
 
     </div>
+</div>
 
-    <div class="col-xs-4 col-sm-4">
-      <form id='getweather'>
-        <input type="text" name="cityname" id="cityname" placeholder="City Name">
-        <input type="submit" value="Search Weather">
-      </form>
-      <div id="weather_city"></div>
-      <div id="temp"></div>
-    </div>
 
-  </div>
+
+
+
     <!--<input id="origin-input" class="controls" type="text" placeholder="Enter an origin location"> -->
 
-  <div id="map" class="in_blk" style="margin-left:50px; margin-top:50px; border:2px solid orange; border-radius:50px;"></div>
-  <div id="list" class="in_blk "></div>
+  <div id="map" class="in_blk" style="margin-left:50px; margin-top:50px; width:40%; border:2px solid orange; border-radius:50px;"></div>
+  <div id="list" class="in_blk col-md-4"></div>
   <a href=""></a>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKZ8QN9eC4BZFN0I_kx1jYeeG-oSV7XoM&libraries=places&callback=initMap" async defer></script>
